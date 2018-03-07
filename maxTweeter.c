@@ -40,7 +40,7 @@ int main(int argc, char** argv)
 			if (csv_pos == index_of_tweeter)
 				printf("%s\n", found);
 
-		 	
+
 			csv_pos++;
 		}
 	}
@@ -49,35 +49,3 @@ int main(int argc, char** argv)
 	return 0;
 
 }
-
-/*
-while (fgets(buf, BUFSIZE, fp) != NULL) {
-    char *line  = buf;
-    char *field;
-    int index = 0;
-    while ((field = strsep(&line, "|")) != NULL) {
-        note the trailing field will contain newline.
-        printf("element %d = %s\n", index, field);
-        index++;
-   }
-}
-*/
-
-
-
-
-
-/*
-//while ((somechar = getline(&line, &len, fp) != 1))
-//	printf("%s", line); // this chunk stops when it encounters a new line
-
-c = fgetc(fp);
-while (c != EOF)
-{
-	printf("%c", c);
-	c = fgetc(fp);
-} // this prints the entire file
-
-printf("\n");
-fclose(fp);
-*/
