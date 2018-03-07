@@ -10,16 +10,9 @@ int main(int argc, char** argv)
 	fp = fopen(argv[1], "r");
 	char line[1024];
 	char *found, *string;
-	/*
-	char** line;
 
-	line = (char**)malloc(sizeof(char*)*1024);
-	 for(int i=0; i<1024; i++)
-	 {
-			ptr[i] = (char*)malloc(sizeof(char)*1024);
 
-	 }
-	 */
+
 
 
 	// test if path does not exist and exit if it doesn't
@@ -42,8 +35,18 @@ int main(int argc, char** argv)
 		// strsep adapted from http://c-for-dummies.com/blog/?p=1769
 	  while( (found = strsep(&string,",")) != NULL )
 		{
-	      printf("%d: %s\n",csv_pos, found);
+			if (strcmp(found, "name") == 0)
+			{
+				index_of_tweeter = csv_pos;
+				//printf("Penis\n %d \n", index_of_tweeter);
+
 				csv_pos++;
+				continue;
+			}
+			if (csv_pos == 8)
+				printf("%s\n", found);
+	    //printf("%d: %s\n",csv_pos, found);
+			csv_pos++;
 		}
 
 	}
