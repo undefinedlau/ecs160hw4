@@ -11,44 +11,38 @@ int main(int argc, char** argv)
 	char line[1024];
 	char *found, *string;
 
-
-
-
-
 	// test if path does not exist and exit if it doesn't
 	if (fp == NULL)
 	{
 		printf("Invalid Input Format\n");
 		exit(-1);
 	}
-	//printf("%lu\n", sizeof(line));
-
 
 	// get each line from file and split according to token
 	while (fgets(line, 1024, fp))
 	{
-		csv_pos = 0;
-
+		csv_pos = 0;	// reset csv_pos for each line
 		string = line; // IDK WHY BUT WE HAVE TO DO IT LIKE dis
-	  // printf("Original string: '%s'\n",string);
 
 		// strsep adapted from http://c-for-dummies.com/blog/?p=1769
 	  while( (found = strsep(&string,",")) != NULL )
 		{
+			// find column index with tweeter names
 			if (strcmp(found, "name") == 0)
 			{
 				index_of_tweeter = csv_pos;
-				//printf("Penis\n %d \n", index_of_tweeter);
+				csv_pos++;	// increment csv_pos
 
-				csv_pos++;
 				continue;
 			}
-			if (csv_pos == 8)
+
+			// check to see if we are in the names columns
+			if (csv_pos == index_of_tweeter)
 				printf("%s\n", found);
-	    //printf("%d: %s\n",csv_pos, found);
+
+		 	
 			csv_pos++;
 		}
-
 	}
 
 	free(string);
