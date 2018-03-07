@@ -23,7 +23,9 @@ int main(int argc, char** argv)
 
 		while (token != NULL)
 		{
-			printf("%s\n", token);
+			//printf("%s\n", token);
+            if (strcmp(token, "name") == 0)
+                printf("Yes");
 			token = strtok(NULL, ",");
 		}
 	}
