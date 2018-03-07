@@ -4,10 +4,23 @@
 
 int main(int argc, char** argv)
 {
+	int index_of_tweeter = -1, csv_pos = 0;
 	char c;
 	FILE* fp;
 	fp = fopen(argv[1], "r");
-	char line[1024];			// longest length in csv file is 459, so to be safe, we set to 1024 for now
+	char line[1024];
+	char *found, *string;
+	/*
+	char** line;
+
+	line = (char**)malloc(sizeof(char*)*1024);
+	 for(int i=0; i<1024; i++)
+	 {
+			ptr[i] = (char*)malloc(sizeof(char)*1024);
+
+	 }
+	 */
+
 
 	// test if path does not exist and exit if it doesn't
 	if (fp == NULL)
@@ -15,25 +28,43 @@ int main(int argc, char** argv)
 		printf("Invalid Input Format\n");
 		exit(-1);
 	}
+	//printf("%lu\n", sizeof(line));
+
 
 	// get each line from file and split according to token
 	while (fgets(line, 1024, fp))
 	{
-		char *token = strtok(line, ",");
+		csv_pos = 0;
 
-		while (token != NULL)
+		string = line; // IDK WHY BUT WE HAVE TO DO IT LIKE dis
+	  // printf("Original string: '%s'\n",string);
+
+		// strsep adapted from http://c-for-dummies.com/blog/?p=1769
+	  while( (found = strsep(&string,",")) != NULL )
 		{
-			//printf("%s\n", token);
-            if (strcmp(token, "name") == 0)
-                printf("Yes");
-			token = strtok(NULL, ",");
+	      printf("%d: %s\n",csv_pos, found);
+				csv_pos++;
 		}
+
 	}
 
+	free(string);
 	return 0;
 
 }
 
+/*
+while (fgets(buf, BUFSIZE, fp) != NULL) {
+    char *line  = buf;
+    char *field;
+    int index = 0;
+    while ((field = strsep(&line, "|")) != NULL) {
+        note the trailing field will contain newline.
+        printf("element %d = %s\n", index, field);
+        index++;
+   }
+}
+*/
 
 
 
