@@ -25,6 +25,7 @@ void verifyInputFile(FILE *fp)
 	// if file is cannot be found then report and exit
 	if (fp == NULL)
 	{
+		//printf("HERE1\n");
 		printf("Invalid Input Format\n");
 		exit(-1);
 	}
@@ -45,11 +46,17 @@ int getCommaIndexOfHeaders(int* header_comma_count, FILE *fp)
 		if (string[i] == ',')
 				(*header_comma_count)++;
 
+	if (*header_comma_count == 0)
+	{
+		printf("Invalid Input Format\n");
+		exit(-1);
+	} // a valid csv file needs to have commas, duh
+
 	// loop through each token to find "name" column
 	while( (found = strsep(&string,",")) != NULL )
 	{
 		// find column index with tweeter names
-		if (strcmp(found, "name") == 0)
+		if (strcmp(found, "name") == 0 || strcmp(found, "name\n") == 0)
 			index_of_tweeter = csv_pos;
 
 		csv_pos++;
@@ -57,6 +64,7 @@ int getCommaIndexOfHeaders(int* header_comma_count, FILE *fp)
 
 	if (index_of_tweeter == -1)
 	{
+		//printf("HERE2\n");
 		printf("Invalid Input Format\n");
 		exit(-1);
 	} // if the header does not contain a "name" field
@@ -86,6 +94,7 @@ void populateTweeterArray(struct Tweeter tweeters[20000], FILE *fp, int index_of
 		// test if # of commas in line is same as # commas in header
 		if (line_comma_count != *header_comma_count)
 		{
+			//printf("HERE3\n");
 			printf("Invalid Input Format\n");
 			exit(-1);
 		}
@@ -179,6 +188,7 @@ int main(int argc, char** argv)
 	struct Tweeter tweeters[20000], maxTweeters[10], tmpTweeters[20000];
 
 	header_comma_count = malloc(sizeof(int));
+	*header_comma_count = 0;
 	FILE *fp = fopen(argv[1], "r");
 
 	verifyInputFile(fp);

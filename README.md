@@ -1,1 +1,2 @@
-# ecs160hw4
+Stanley Cheah
+Brian Lau
