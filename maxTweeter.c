@@ -56,7 +56,8 @@ int getCommaIndexOfHeaders(int* header_comma_count, FILE *fp)
 	while( (found = strsep(&string,",")) != NULL )
 	{
 		// find column index with tweeter names
-		if (strcmp(found, "name") == 0 || strcmp(found, "name\n") == 0)
+		//if (strcmp(found, "name") == 0 || strcmp(found, "name\n") == 0)
+		if (strcmp(found, "name") == 0 || strcmp(found, "name\n") == 0 || strcmp(found, "\"name\"") == 0 || strcmp(found, "\"name\"\n") == 0)
 			index_of_tweeter = csv_pos;
 
 		csv_pos++;
