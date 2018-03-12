@@ -5,7 +5,7 @@
 
 struct Tweeter
 {
-   char name[20];
+   char name[30];
    int count;
 };
 
@@ -69,7 +69,6 @@ int getCommaIndexOfHeaders(int* header_comma_count, FILE *fp)
 		printf("Invalid Input Format\n");
 		exit(-1);
 	} // if the header does not contain a "name" field
-
 	return index_of_tweeter;
 } // returns index_of_tweeter (name) and the header_comma_count
 
@@ -128,6 +127,7 @@ void populateTweeterArray(struct Tweeter tweeters[20000], FILE *fp, int index_of
 			csv_pos++;
 		}
 	}
+  return;
 }
 
 void copyTweeters(struct Tweeter tweeters[20000], struct Tweeter tmpTweeters[20000])
@@ -142,6 +142,21 @@ void copyTweeters(struct Tweeter tweeters[20000], struct Tweeter tmpTweeters[200
 // find the tweeters that tweet the most
 void getMaxTweeters(struct Tweeter maxTweeters[10], struct Tweeter tmpTweeters[20000])
 {
+  for (int i = 0; i < 10; i++)
+    maxTweeters[i].count = 0;
+
+  for (int i = 0; i < 20000; i++)
+  {
+    for (int j = 0; j < 10; j++)
+    {
+      if (tmpTweeters[i].count > maxTweeters[j].count)
+      {
+        maxTweeters[j].count = tmpTweeters[i].count;
+        strcpy(maxTweeters[j].name, tmpTweeters[i].name);
+      }
+    }
+  }
+  /*
 	int max = 0;
 	int index_of_max = 0;
 
@@ -155,6 +170,15 @@ void getMaxTweeters(struct Tweeter maxTweeters[10], struct Tweeter tmpTweeters[2
 		{
 			if (strlen(tmpTweeters[j].name) != 0)
 			{
+
+        if (strcmp(tmpTweeters[j].name, "\"_mhertz\"") == 0)
+        {
+          printf("HERE\n");
+          printf("%s: %d\n", tmpTweeters[j].name, tmpTweeters[j].count);
+
+          exit(0);
+        }
+
 				if (tmpTweeters[j].count > max)
 				{
 					index_of_max = j;
@@ -170,6 +194,7 @@ void getMaxTweeters(struct Tweeter maxTweeters[10], struct Tweeter tmpTweeters[2
 		strcpy(maxTweeters[i].name, tmpTweeters[index_of_max].name); // populate the maxTweeters array
 		maxTweeters[i].count = max;
 	}
+  */
 } // does as function name says
 
 // print at most top ten tweeters
