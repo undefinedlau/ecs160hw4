@@ -142,59 +142,43 @@ void copyTweeters(struct Tweeter tweeters[20000], struct Tweeter tmpTweeters[200
 // find the tweeters that tweet the most
 void getMaxTweeters(struct Tweeter maxTweeters[10], struct Tweeter tmpTweeters[20000])
 {
-  for (int i = 0; i < 10; i++)
-    maxTweeters[i].count = 0;
+  int n = 0;
 
   for (int i = 0; i < 20000; i++)
   {
-    for (int j = 0; j < 10; j++)
+    if (tmpTweeters[i].count == 0)
     {
-      if (tmpTweeters[i].count > maxTweeters[j].count)
+      n = i;
+      break;
+    }
+  }
+
+  // bubble sort
+  for (int i = 0; i < n - 1; i++)
+  {
+    for (int j = 0; j < n - i - 1; j++)
+    {
+      if (tmpTweeters[j].count < tmpTweeters[j + 1].count)
       {
-        maxTweeters[j].count = tmpTweeters[i].count;
-        strcpy(maxTweeters[j].name, tmpTweeters[i].name);
+        struct Tweeter tmp;
+        strcpy(tmp.name, tmpTweeters[j].name);
+        tmp.count = tmpTweeters[j].count;
+
+        strcpy(tmpTweeters[j].name, tmpTweeters[j + 1].name);
+        tmpTweeters[j].count = tmpTweeters[j + 1].count;
+
+        strcpy(tmpTweeters[j + 1].name, tmp.name);
+        tmpTweeters[j + 1].count = tmp.count;
       }
     }
   }
-  /*
-	int max = 0;
-	int index_of_max = 0;
 
-	// loop 10 times to find top 10
-	for (int i = 0; i < 10; i++)
-	{
-		max = 0;
-
-		// find the max tweeter, note index, and set count to 0 so it is not max anymore
-		for (int j = 0; j < 20000; j++)
-		{
-			if (strlen(tmpTweeters[j].name) != 0)
-			{
-
-        if (strcmp(tmpTweeters[j].name, "\"_mhertz\"") == 0)
-        {
-          printf("HERE\n");
-          printf("%s: %d\n", tmpTweeters[j].name, tmpTweeters[j].count);
-
-          exit(0);
-        }
-
-				if (tmpTweeters[j].count > max)
-				{
-					index_of_max = j;
-					max = tmpTweeters[j].count;
-					tmpTweeters[j].count = 0;
-				}
-			}
-		}
-
-		if (max == 0) // if we sadly cannot find a max
-			break;
-
-		strcpy(maxTweeters[i].name, tmpTweeters[index_of_max].name); // populate the maxTweeters array
-		maxTweeters[i].count = max;
-	}
-  */
+  // copy top ten over to maxTweeters
+  for (int i = 0; i < 10; i++)
+  {
+    strcpy(maxTweeters[i].name, tmpTweeters[i].name);
+    maxTweeters[i].count = tmpTweeters[i].count;
+  }
 } // does as function name says
 
 // print at most top ten tweeters
@@ -206,7 +190,6 @@ void printMax(struct Tweeter maxTweeters[10])
 			printf("%s: %d\n", maxTweeters[i].name, maxTweeters[i].count);
 	}
 }
-
 
 int main(int argc, char** argv)
 {
